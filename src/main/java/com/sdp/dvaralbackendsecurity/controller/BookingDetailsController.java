@@ -2,6 +2,7 @@ package com.sdp.dvaralbackendsecurity.controller;
 
 
 
+import com.sdp.dvaralbackendsecurity.dto.StatusDto;
 import com.sdp.dvaralbackendsecurity.model.BookingDetails;
 import com.sdp.dvaralbackendsecurity.service.BookingDetailsService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v2/hall")
@@ -37,9 +39,17 @@ public class BookingDetailsController {
 
     }
 
+    @GetMapping("/getby/{bookingID}")
+    public ResponseEntity<?> getBookingDetails(@PathVariable Long bookingID) {
+
+        Optional<BookingDetails> bookingDetailsList = bookingDetailsService.getAllBookingDetailsFor(bookingID);
+        return new ResponseEntity<>(bookingDetailsList, HttpStatus.OK);
+    }
+
 
     @GetMapping("/fetch/booking-details/{userID}")
     public ResponseEntity<?> fetchBookingDetails(@PathVariable Long userID) {
+
         try{
 
             List<BookingDetails> bookedHallsForUser = bookingDetailsService.getBookingDetailsForUser(userID);
@@ -50,6 +60,41 @@ public class BookingDetailsController {
             log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/fetch/booked-details/{status}")
+    public ResponseEntity<?> fetchApprovedBookingDetails(@PathVariable String status) {
+
+        try{
+
+            List<BookingDetails> bookedDetails = bookingDetailsService.getBookedDetails(status);
+            return new ResponseEntity<>(bookedDetails, HttpStatus.OK);
+        }catch (Exception e){
+
+            log.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PatchMapping("/update-status/{hallID}")
+    public ResponseEntity<?> updateHallStatus(@PathVariable Long hallID, @RequestBody StatusDto hallStatus) {
+
+        try{
+
+            Boolean response = bookingDetailsService.updateHallStatus(hallID, hallStatus);
+
+            if(response)
+                return new ResponseEntity<>("Hall : " + hallID + " updated successfully to status - " + hallStatus.getBookingStatus(), HttpStatus.OK);
+            else
+                return new ResponseEntity<>("Hall not found", HttpStatus.NOT_FOUND);
+
+        }catch (Exception e){
+
+            log.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 
