@@ -57,13 +57,13 @@ public class HallController {
     }
 
     @GetMapping("/fetch/{hallID}")
-    public ResponseEntity<Halls> fetchHallDetails(@PathVariable Long hallID){
+    public ResponseEntity<?> fetchHallDetails(@PathVariable Long hallID){
         try{
 
             Optional<Halls> hallObj = hallService.getHallDetailsBYID(hallID);
 
             return hallObj.map(halls -> new ResponseEntity<>(halls, HttpStatus.OK))
-                    .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
         } catch (Exception e){
 

@@ -27,7 +27,7 @@ public class BookingDetailsController {
         try{
 
             BookingDetails bookedHalls = bookingDetailsService.addBookingDetails(bookingDetails, userID, hallID);
-            return new ResponseEntity<>(bookedHalls, HttpStatus.CREATED);
+            return new ResponseEntity<>("Hall : " + hallID + " booked successfully", HttpStatus.CREATED);
 
         }catch (Exception e){
 

@@ -26,7 +26,7 @@ public class FavoriteHallController {
         try{
 
             FavoriteHalls favHalls = favouriteHallService.addHallToFav(userID, hallID);
-            return new ResponseEntity<>(favHalls, HttpStatus.OK);
+            return new ResponseEntity<>("Hall : " + hallID + " added to favorites for user : " + userID, HttpStatus.OK);
 
         }catch (Exception e){
 
@@ -56,7 +56,7 @@ public class FavoriteHallController {
         try{
 
             favouriteHallService.deleteFavorite(favoriteHalls);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>( "Removed from favorites",HttpStatus.OK);
 
         }catch (Exception e){
 
