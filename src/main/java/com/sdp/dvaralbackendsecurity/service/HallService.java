@@ -24,6 +24,7 @@ public class HallService {
 
         Optional<User> userObj = userRepository.findById(userID);
 
+//        halls.setUsers(userObj.get());
         userObj.ifPresent(halls::setUsers);
 
         return hallRepository.save(halls);

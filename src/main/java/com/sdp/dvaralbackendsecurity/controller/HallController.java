@@ -1,7 +1,6 @@
 package com.sdp.dvaralbackendsecurity.controller;
 
 
-
 import com.sdp.dvaralbackendsecurity.model.Halls;
 import com.sdp.dvaralbackendsecurity.service.HallService;
 import com.sdp.dvaralbackendsecurity.service.ImageService;

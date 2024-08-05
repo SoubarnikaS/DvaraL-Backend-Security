@@ -33,8 +33,8 @@ public class SecurityConfiguration {
                         authorize -> authorize.requestMatchers(PublicEndPoints).permitAll().anyRequest().authenticated()
                 )
                 .sessionManagement(
-                        session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                                .maximumSessions(1)
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                                .maximumSessions(1)
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
