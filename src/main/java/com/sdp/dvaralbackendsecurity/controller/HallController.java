@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("api/v1/halls")
+@RequestMapping("api/v2/halls")
 @Slf4j
 public class HallController {
 

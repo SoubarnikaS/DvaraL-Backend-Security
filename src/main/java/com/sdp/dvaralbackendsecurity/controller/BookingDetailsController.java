@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/hall")
+@RequestMapping("api/v2/hall")
 @Slf4j
 public class BookingDetailsController {
 

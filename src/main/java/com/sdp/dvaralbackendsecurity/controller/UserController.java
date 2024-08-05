@@ -11,27 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v2/auth")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
-
-        try{
-            User isAdded = userService.addUser(user);
-
-            if (isAdded != null) {
-                return new  ResponseEntity<>("User added successfully with user ID: " + user.getId(), HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>("User not added", HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 
     @GetMapping("/fetch/allUser")
     public ResponseEntity<?> getAllUsers() {
