@@ -1,5 +1,6 @@
 package com.sdp.dvaralbackendsecurity.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -18,10 +19,12 @@ import lombok.Setter;
 @IdClass(FavoriteHallsIdClass.class)
 public class FavoriteHalls {
 
+    @JsonManagedReference
     @ManyToOne
     @Id
     private User users;
 
+    @JsonManagedReference
     @ManyToOne
     @Id
     private Halls hall;

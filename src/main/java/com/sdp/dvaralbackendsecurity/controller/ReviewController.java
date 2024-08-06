@@ -26,7 +26,7 @@ public class ReviewController {
         try{
 
             Reviews review = reviewService.addReview(reviews, userID);
-            return new ResponseEntity<>("Review added successfully by user : " + userID, HttpStatus.OK);
+            return new ResponseEntity<>("Review : " + review.getReviewID() +" added successfully by user : " + userID, HttpStatus.OK);
         }catch (Exception e){
 
             log.error(e.getMessage());

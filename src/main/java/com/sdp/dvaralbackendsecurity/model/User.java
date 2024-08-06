@@ -35,7 +35,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookingDetails> bookingDetails;
 
@@ -43,9 +43,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reviews> reviews;
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JsonBackReference
     private List<FavoriteHalls> favoriteHalls;
 
 

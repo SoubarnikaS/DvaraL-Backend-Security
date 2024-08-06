@@ -1,6 +1,7 @@
 package com.sdp.dvaralbackendsecurity.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,11 +34,11 @@ public class BookingDetails {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+    @JsonManagedReference
     private User users;
 
     @ManyToOne
     @JoinColumn(name = "hall_id")
-    @JsonIgnore
+    @JsonManagedReference
     private Halls halls;
 }

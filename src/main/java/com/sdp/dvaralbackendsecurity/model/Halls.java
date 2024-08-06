@@ -1,5 +1,6 @@
 package com.sdp.dvaralbackendsecurity.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,9 +36,8 @@ public class Halls {
     private List<String> hallAmenitiesList;
 
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JsonBackReference
     private List<FavoriteHalls> favoriteHalls;
 
 
@@ -45,7 +45,7 @@ public class Halls {
     private User users;
 
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "halls", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookingDetails> bookingDetailsList;
 
