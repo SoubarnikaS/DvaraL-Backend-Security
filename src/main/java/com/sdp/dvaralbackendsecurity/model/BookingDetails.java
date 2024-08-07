@@ -32,13 +32,13 @@ public class BookingDetails {
     private String bookingStatus;
 
 
+//    @JsonManagedReference("bookingUserReference")
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
     private User users;
 
+//    @JsonManagedReference("bookingHallReference")
     @ManyToOne
     @JoinColumn(name = "hall_id")
-    @JsonManagedReference
     private Halls halls;
 }

@@ -35,17 +35,19 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BookingDetails> bookingDetails;
+//    @JsonIgnore
+////    @JsonManagedReference("bookingUserReference")
+//    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<BookingDetails> bookingDetails;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Reviews> reviews;
+//    @JsonBackReference("reviewUserReference")
+//    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<Reviews> reviews;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<FavoriteHalls> favoriteHalls;
+//    @JsonBackReference("favoriteUserReference")
+////    @JsonIgnore
+//    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<FavoriteHalls> favoriteHalls;
 
 
     @JsonIgnore

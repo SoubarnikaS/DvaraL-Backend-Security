@@ -19,13 +19,14 @@ import lombok.Setter;
 @IdClass(FavoriteHallsIdClass.class)
 public class FavoriteHalls {
 
-    @JsonManagedReference
     @ManyToOne
     @Id
+//    @JsonManagedReference("favoriteUserReference")
     private User users;
 
-    @JsonManagedReference
+
     @ManyToOne
     @Id
+//    @JsonManagedReference("favoriteHallReference")
     private Halls hall;
 }

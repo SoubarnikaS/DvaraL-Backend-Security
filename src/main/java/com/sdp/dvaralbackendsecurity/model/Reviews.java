@@ -3,6 +3,7 @@ package com.sdp.dvaralbackendsecurity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,6 @@ public class Reviews {
     private int rating;
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonManagedReference("reviewUserReference")
     private User users;
 }
