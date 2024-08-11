@@ -13,4 +13,6 @@ public interface BookingDetailsRepository extends JpaRepository<BookingDetails, 
     List<BookingDetails> findByUsers_Id(Long userID);
 
     List<BookingDetails> findAllByBookingStatus(String status);
+
+    List<BookingDetails> findByHalls_hallID(Long hallID);
 }

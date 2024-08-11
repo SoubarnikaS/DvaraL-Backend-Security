@@ -10,8 +10,10 @@ import com.sdp.dvaralbackendsecurity.repo.BookingDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingDetailsService {
@@ -42,9 +44,9 @@ public class BookingDetailsService {
         return bookingDetailsRepository.findByUsers_Id(userID);
     }
 
-    public Boolean updateHallStatus(Long hallID, StatusDto hallStatus) {
+    public Boolean updateHallStatus(Long bookingID, StatusDto hallStatus) {
 
-        Optional<BookingDetails> hallObj = bookingDetailsRepository.findById(hallID);
+        Optional<BookingDetails> hallObj = bookingDetailsRepository.findById(bookingID);
 
         if(hallObj.isEmpty())
             return false;
@@ -62,5 +64,16 @@ public class BookingDetailsService {
 
     public Optional<BookingDetails> getAllBookingDetailsFor(Long bookingID) {
         return bookingDetailsRepository.findById(bookingID);
+    }
+
+    public List<BookingDetails> getBookingRequestsForOwner(Long userID) {
+        List<Long> ownedHalls = hallService.getHallDetailsByUser(userID)
+                .stream().map(Halls::getHallID).collect(Collectors.toList());
+        List<BookingDetails> bookings= new ArrayList<>();
+        for (Long hallID : ownedHalls) {
+            List<BookingDetails> hallObj = bookingDetailsRepository.findByHalls_hallID(hallID);
+            bookings.addAll(hallObj);
+        }
+        return bookings;
     }
 }

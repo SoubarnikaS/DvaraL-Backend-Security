@@ -21,7 +21,8 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
 
     private static final String[] PublicEndPoints = {
-            "api/v1/auth/**"
+            "api/v1/auth/**",
+            "api/v2/auth/getUserId/**"
     };
 
 

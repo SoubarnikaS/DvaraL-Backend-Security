@@ -25,12 +25,17 @@ public class AuthenticationService {
     private final TokenRepo tokenRepo;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        boolean isHallManager = "MANAGER".equals(request.getRole().name());
+
         var user  = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
+                .locked(isHallManager)
                 .build();
+
         userRepo.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

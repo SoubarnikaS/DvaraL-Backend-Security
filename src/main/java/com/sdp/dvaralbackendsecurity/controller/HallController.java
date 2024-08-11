@@ -1,13 +1,20 @@
 package com.sdp.dvaralbackendsecurity.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sdp.dvaralbackendsecurity.model.Halls;
+import com.sdp.dvaralbackendsecurity.model.User;
+import com.sdp.dvaralbackendsecurity.repo.UserRepo;
 import com.sdp.dvaralbackendsecurity.service.HallService;
 import com.sdp.dvaralbackendsecurity.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v2/halls")
 @Slf4j
+@CrossOrigin(origins = "http://localhost:5173")
 public class HallController {
 
     @Autowired
@@ -25,12 +33,30 @@ public class HallController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    @PostMapping("/add-halls/{userID}")
-    public ResponseEntity<String> addHallDetails(@RequestBody Halls halls, @PathVariable Long userID){
+    @Autowired
+    private UserRepo userRepository;
+
+
+    @PostMapping("/add-halls")
+    public ResponseEntity<String> addHallDetails(@RequestBody Halls halls){
         try{
 
-            Halls hallObj = hallService.addHallDetails(halls, userID);
+            objectMapper.registerModule(new JavaTimeModule());
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            String email = authentication.getName();
+
+            Optional<User> user = userRepository.findByEmail(email);
+            User foundUser = user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+
+            Halls hallObj = hallService.addHallDetails(halls, foundUser.getId());
+
+
             return new ResponseEntity<>("Hall details added successfully with ID : " + hallObj.getHallID(), HttpStatus.CREATED);
         }catch (Exception e){
 
@@ -45,7 +71,7 @@ public class HallController {
         try{
 
             List<Halls> hallDetailsList = hallService.getAllHallDetails();
-            log.info("fetching details");
+//            log.info("fetching details");
 
             return new ResponseEntity<>(hallDetailsList, HttpStatus.OK);
 
@@ -71,6 +97,28 @@ public class HallController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/fetch/by/manager")
+    public ResponseEntity<?> fetchHallsByManager(){
+        try{
+            objectMapper.registerModule(new JavaTimeModule());
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            String email = authentication.getName();
+
+            Optional<User> user = userRepository.findByEmail(email);
+            User foundUser = user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+            List<Halls> hallsList = hallService.getHallDetailsByUser(foundUser.getId());
+            return new ResponseEntity<>(hallsList, HttpStatus.OK);
+        }catch (Exception e){
+
+            log.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PutMapping("/edit/hall/{hallID}")
     public ResponseEntity<?> editHallDetails(@RequestBody Halls halls, @PathVariable Long hallID){

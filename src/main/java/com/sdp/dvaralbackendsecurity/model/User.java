@@ -2,7 +2,6 @@ package com.sdp.dvaralbackendsecurity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sdp.dvaralbackendsecurity.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,8 +24,12 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
+    private boolean locked;
 
     @JsonBackReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -71,7 +74,7 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @JsonIgnore

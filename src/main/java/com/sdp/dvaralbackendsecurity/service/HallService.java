@@ -37,6 +37,10 @@ public class HallService {
         return hallRepository.findById(hallID);
     }
 
+    public List<Halls> getHallDetailsByUser(Long userId) {
+        return hallRepository.findByUsers_Id(userId);
+    }
+
     public Optional<Halls> editHallDetails(Halls halls, Long hallID) {
 
         Halls existingHall = hallRepository.findById(hallID).orElse(null);

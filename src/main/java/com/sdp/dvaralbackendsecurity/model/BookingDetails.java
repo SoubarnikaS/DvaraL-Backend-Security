@@ -1,5 +1,6 @@
 package com.sdp.dvaralbackendsecurity.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,11 +22,11 @@ public class BookingDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingID;
-    private LocalDateTime bookingDateTime;
     private String userName;
     private String userEmail;
     private String userPhone;
-    private String requestedDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date requestedDate;
     private String requestedTime;
     private int noOfGuest;
     private String eventType;
