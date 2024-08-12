@@ -29,6 +29,7 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
+
     private boolean locked;
 
     @JsonBackReference
@@ -37,21 +38,6 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-//    @JsonIgnore
-////    @JsonManagedReference("bookingUserReference")
-//    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<BookingDetails> bookingDetails;
-
-//    @JsonBackReference("reviewUserReference")
-//    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<Reviews> reviews;
-
-//    @JsonBackReference("favoriteUserReference")
-////    @JsonIgnore
-//    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<FavoriteHalls> favoriteHalls;
-
 
     @JsonIgnore
     @Override

@@ -22,7 +22,8 @@ public class SecurityConfiguration {
 
     private static final String[] PublicEndPoints = {
             "api/v1/auth/**",
-            "api/v2/auth/getUserId/**"
+            "api/v2/auth/getUserId/**",
+            "api/v2/halls/fetch/all-halls"
     };
 
 

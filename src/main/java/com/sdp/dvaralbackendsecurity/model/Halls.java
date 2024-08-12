@@ -31,28 +31,15 @@ public class  Halls {
     private String hallContact;
     private int capacity;
     private double hallPrice;
+    private String hallLogo;
 
 
     @ElementCollection
     private List<String> hallAmenitiesList;
 
 
-//    @JsonBackReference("favoriteHallReference")
-////    @JsonIgnore
-//    @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<FavoriteHalls> favoriteHalls;
-
-
-//    @JsonManagedReference("userHallReference")
     @ManyToOne
     private User users;
-
-
-//    @JsonIgnore
-////    @JsonBackReference("bookingHallReference")
-//    @OneToMany(mappedBy = "halls", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<BookingDetails> bookingDetailsList;
-
 
 
 }

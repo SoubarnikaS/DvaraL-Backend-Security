@@ -2,6 +2,7 @@ package com.sdp.dvaralbackendsecurity.service;
 
 
 import com.sdp.dvaralbackendsecurity.dto.StatusDto;
+import com.sdp.dvaralbackendsecurity.enums.Role;
 import com.sdp.dvaralbackendsecurity.model.User;
 import com.sdp.dvaralbackendsecurity.repo.UserRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class UserService {
 
     public List<User> getAllUsers() {
 
-        return userRepository.findAll();
+        return userRepository.findByRole(Role.MANAGER);
     }
 
     public User getUser(Long userID) {
@@ -42,16 +43,12 @@ public class UserService {
         }
 
         User user = userObj.get();
-        log.info("Current locked status before update: {}", user.isLocked());
 
 
         if(accountStatus.getBookingStatus().equalsIgnoreCase("accept")) {
 
             user.setLocked(false);
             userRepository.save(user);
-
-            log.info("Account unlocked successfully for user ID: {}", userID);
-            log.info("Current locked status after update: {}", user.isLocked());
 
             return true;
         }
